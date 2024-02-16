@@ -201,16 +201,46 @@ require('lazy').setup({
   },
 
   {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+      "zbirenbaum/copilot.lua",
+      cmd = "Copilot",
+      event = "InsertEnter",
+      config = function (self, opts)
+        require'copilot'.setup()
+      end
+  },
+
+  -- {
+  --   -- Theme inspired by Atom
+  --   'navarasu/onedark.nvim',
+  --   priority = 1000,
+  --   lazy = false,
+  --   config = function()
+  --     require('onedark').setup {
+  --       -- Set a style preset. 'dark' is default.
+  --       style = 'dark', -- dark, darker, cool, deep, warm, warmer, light
+  --     }
+  --     require('onedark').load()
+  --   end,
+  -- },
+
+  -- {
+  --   'whatyouhide/vim-gotham',
+  --   priority = 1000,
+  --   lazy = false,
+  --   config = function()
+  --     vim.cmd [[colorscheme gotham]]
+  --   end,
+  -- },
+
+  {
+    'aktersnurra/no-clown-fiesta.nvim',
     priority = 1000,
     lazy = false,
     config = function()
-      require('onedark').setup {
-        -- Set a style preset. 'dark' is default.
-        style = 'dark', -- dark, darker, cool, deep, warm, warmer, light
-      }
-      require('onedark').load()
+      require("no-clown-fiesta").setup({
+        transparent = true, -- Enable this to disable the bg color
+      })
+      require("no-clown-fiesta").load()
     end,
   },
 
@@ -270,6 +300,10 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
 
+  {
+    'bogado/file-line',
+  }
+
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -325,6 +359,10 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
+
+
+-- relative line number
+vim.o.relativenumber = true
 
 -- [[ Basic Keymaps ]]
 
@@ -439,7 +477,7 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
+    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash', 'svelte', 'css', 'vue', 'python' },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
