@@ -139,6 +139,7 @@ return {
       }
     end,
   },
+
   {
     'nvimtools/none-ls.nvim',
     config = function()
@@ -153,5 +154,6 @@ return {
       }
     end,
   },
+
   { 'gleam-lang/gleam.vim' },
 }
