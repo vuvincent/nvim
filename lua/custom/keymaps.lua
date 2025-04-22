@@ -42,7 +42,7 @@ vim.keymap.set('n', '<leader>ws', require('fzf-lua').lsp_live_workspace_symbols,
 vim.keymap.set('n', '<leader>ds', require('fzf-lua').lsp_document_symbols, { desc = 'LSP [D]ocument [S]ymbols' })
 vim.keymap.set('n', '<leader>sr', require('fzf-lua').resume, { desc = '[R]esume' })
 vim.keymap.set('n', '<leader>dd', require('fzf-lua').diagnostics_document, { desc = 'Search [D]ocument [D]iagnostics' })
-vim.keymap.set('n', '<leader>fm', vim.lsp.buf.format, { desc = '[F]or[m]at current buffer with LSP' })
+vim.keymap.set('n', '<leader>fm', require("conform").format, { desc = '[F]or[m]at current buffer with LSP' })
 
 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'LSP: [R]e[n]ame' })
 vim.keymap.set('n', '<leader>ca', require('fzf-lua').lsp_code_actions, { desc = 'LSP: [C]ode [A]ction' })

@@ -29,6 +29,8 @@ require 'custom.settings'
 require 'custom.keymaps'
 require 'custom.search'.setup_telescope()
 
+require 'custom.formatter'.setup()
+
 if (vim.g.colors_name == 'no-clown-fiesta') then
   -- no-clown-fiesta's numberline is a bit dark
   vim.api.nvim_set_hl(0, 'LineNr', { fg = '#7d7d7d' })

@@ -55,6 +55,7 @@ return {
           'prismals',
           'pyright',
         },
+        automatic_installation = true,
       }
 
       mason_tool_installer.setup {
@@ -109,52 +110,8 @@ return {
       require('nvim-ts-autotag').setup()
     end,
   },
-  {
-    'stevearc/conform.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-      local conform = require 'conform'
-
-      conform.setup {
-        formatters_by_ft = {
-          javascript = { 'prettier' },
-          typescript = { 'prettier' },
-          javascriptreact = { 'prettier' },
-          typescriptreact = { 'prettier' },
-          svelte = { 'prettier' },
-          css = { 'prettier' },
-          html = { 'prettier' },
-          json = { 'prettier' },
-          yaml = { 'prettier' },
-          markdown = { 'prettier' },
-          graphql = { 'prettier' },
-          liquid = { 'prettier' },
-          lua = { 'stylua' },
-          python = { 'isort', 'black' },
-          sql = { 'sqlfmt', 'sql-formatter' }
-        },
-      }
-    end,
-  },
-
-  {
-    'nvimtools/none-ls.nvim',
-    config = function()
-      local null_ls = require 'null-ls'
-
-      null_ls.setup {
-        sources = {
-          -- null_ls.builtins.diagnostics.eslint,
-          null_ls.builtins.formatting.prettier,
-        },
-      }
-    end,
-  },
-
   { 'gleam-lang/gleam.vim' },
-  -- {
-  --   "pmizio/typescript-tools.nvim",
-  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-  --   opts = {}
-  -- }
+  {
+    "stevearc/conform.nvim",
+  }
 }
