@@ -37,3 +37,4 @@ if (vim.g.colors_name == 'no-clown-fiesta') then
 end
 
 require 'custom.lang'.setup()
+require 'custom.git'.setup()
