@@ -13,11 +13,12 @@ function M.setup()
       rust = { 'rustfmt' },
       -- Formatter for typescript
       typescript = { 'prettier' },
+      typescriptreact = { 'prettier' },
     },
   }
 
   vim.keymap.set('n', '<leader>fm', function()
-    require('conform').format { async = true }
+    require('conform').format { }
   end, { desc = 'Format current buffer with formatter' })
 end
 
