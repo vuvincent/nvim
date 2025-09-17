@@ -18,31 +18,31 @@ return {
         end,
       },
       {
-        "nvim-telescope/telescope-live-grep-args.nvim",
+        'nvim-telescope/telescope-live-grep-args.nvim',
         -- This will not install any breaking changes.
         -- For major updates, this must be adjusted manually.
-        version = "^1.0.0",
+        version = '^1.0.0',
       },
     },
     opts = {
       defaults = {
-        file_ignore_patterns = { ".git/", ".cache/" },
-        prompt_prefix = " ",
-        path_display = { "smart" },
-      }
+        file_ignore_patterns = { '.git/', '.cache/' },
+        prompt_prefix = ' ',
+        path_display = { 'smart' },
+      },
     },
   },
   {
-    "folke/snacks.nvim",
+    'folke/snacks.nvim',
     opts = {
       picker = {
         sources = {
           explorer = {
-            focus = "input",
+            focus = 'input',
             auto_close = true,
-          }
-        }
-      }
-    }
-  }
+          },
+        },
+      },
+    },
+  },
 }
