@@ -26,7 +26,7 @@ function modules.setup()
         'astro',
         'yaml',
         'prisma',
-        'graphql'
+        'graphql',
       },
 
       -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
@@ -143,18 +143,45 @@ function modules.setup()
 
   mason_lspconfig.setup_handlers {
     function(server_name)
-      require('lspconfig')[server_name].setup {
-        capabilities = capabilities,
-        settings = servers[server_name],
-        filetypes = (servers[server_name] or {}).filetypes,
-      }
+      if server_name == 'tsserver' then
+        require('lspconfig')[server_name].setup {
+          cmd = {
+            'node',
+            '--max-old-space-size=16384',
+            vim.fn.stdpath 'data' .. '/mason/packages/typescript-language-server/node_modules/.bin/typescript-language-server',
+            '--stdio',
+            '--tsserver-path',
+            'node_modules/typescript/lib/tsserverlibrary.js',
+          },
+        }
+      elseif server_name == 'biome' then
+        require('lspconfig')[server_name].setup {
+          on_new_config = function(new_config, root_dir)
+            local p = root_dir .. '/node_modules/@biomejs/biome/bin/biome'
+            if vim.loop.fs_stat(p) then
+              new_config.cmd = { 'node', p, 'lsp-proxy' }
+            else
+              new_config.cmd = {
+                vim.fn.stdpath 'data' .. '/mason/bin/biome',
+                'lsp-proxy',
+              }
+            end
+          end,
+        }
+      else
+        require('lspconfig')[server_name].setup {
+          capabilities = capabilities,
+          settings = servers[server_name],
+          filetypes = (servers[server_name] or {}).filetypes,
+        }
+      end
     end,
   }
 
   -- hide lsp inline text
-  vim.diagnostic.config({
+  vim.diagnostic.config {
     virtual_text = false,
-  })
+  }
 
   -- [[ Configure nvim-cmp ]]
   -- See `:help cmp`
@@ -187,6 +214,25 @@ function modules.setup()
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
       { name = 'path' },
+    },
+  }
+
+  -- [[ setup typescript-tools.nvim ]]
+  -- See `:help typescript-tools.nvim`
+  require('typescript-tools').setup {
+    debug = false,
+    tsserver_path = 'node_modules/typescript/lib/tsserver.js',
+    disable_commands = false,
+    disable_formatting = false,
+    formatters = { 'prettier' },
+    code_actions = {
+      sourceActions = {
+        organizeImports = true,
+        fixAll = true,
+      },
+      fixActions = {
+        fixAll = true,
+      },
     },
   }
 end

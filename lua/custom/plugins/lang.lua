@@ -9,7 +9,7 @@ return {
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       opts = {} },
+      { 'j-hui/fidget.nvim', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -44,7 +44,6 @@ return {
       mason_lspconfig.setup {
         -- list of servers for mason to install
         ensure_installed = {
-          'tsserver',
           'html',
           'cssls',
           'tailwindcss',
@@ -61,9 +60,9 @@ return {
       mason_tool_installer.setup {
         ensure_installed = {
           'prettier', -- prettier formatter
-          'stylua',   -- lua formatter
-          'isort',    -- python formatter
-          'black',    -- python formatter
+          'stylua', -- lua formatter
+          'isort', -- python formatter
+          'black', -- python formatter
         },
       }
     end,
@@ -112,6 +111,13 @@ return {
   },
   { 'gleam-lang/gleam.vim' },
   {
-    "stevearc/conform.nvim",
-  }
+    'stevearc/conform.nvim',
+  },
+  {
+    'pmizio/typescript-tools.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    config = function()
+      require('typescript-tools').setup {}
+    end,
+  },
 }

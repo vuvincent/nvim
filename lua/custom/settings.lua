@@ -65,9 +65,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
--- Set border on text hovers
-vim.o.winborder = 'rounded'
-
 -- tabs
 vim.opt.tabstop = 4       -- Number of spaces a <Tab> counts for
 vim.opt.shiftwidth = 4    -- Number of spaces used for each step of auto-indent
