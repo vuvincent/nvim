@@ -15,6 +15,7 @@ function M.setup()
       typescriptreact = { 'prettier' },
       -- Formatter for rust
       rust = { 'rustfmt' },
+      go = { 'goimports' },
     },
   }
 
