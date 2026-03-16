@@ -69,3 +69,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.opt.tabstop = 4       -- Number of spaces a <Tab> counts for
 vim.opt.shiftwidth = 4    -- Number of spaces used for each step of auto-indent
 vim.opt.expandtab = true  -- Use spaces instead of tabs
+
+-- window border
+vim.o.winborder = 'rounded'

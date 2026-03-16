@@ -225,6 +225,9 @@ function modules.setup()
     disable_commands = false,
     disable_formatting = false,
     formatters = { 'prettier' },
+    settings = {
+      tsserver_max_memory = 16384,
+    },
     code_actions = {
       sourceActions = {
         organizeImports = true,
