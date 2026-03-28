@@ -37,3 +37,5 @@ end
 
 require('custom.lang').setup()
 require('custom.git').setup()
+
+setThemeOS()

@@ -5,7 +5,9 @@ local config = {
     priority = 1000,
     config = function()
       require('no-clown-fiesta').setup {
-        transparent = true, -- Enable this to disable the bg color
+        options = {
+          transparent = true, -- Enable this to disable the bg color
+        },
       }
       -- vim.cmd 'colorscheme no-clown-fiesta'
     end,
@@ -13,7 +15,12 @@ local config = {
   {
     'projekt0n/github-nvim-theme',
     config = function()
-      vim.cmd 'colorscheme github_dark_high_contrast'
+      require('github-theme').setup {
+        options = {
+          terminal_colors = true,
+          transparent = true,
+        },
+      }
     end,
   },
   {
@@ -26,13 +33,28 @@ local config = {
   },
   {
     'mcauley-penney/techbase.nvim',
-    opts = {
-      transparent = true,
-      style = 'dark',
-    },
-    -- init = function() vim.cmd.colorscheme("techbase") end,
+    config = function()
+      -- vim.cmd 'colorscheme techbase'
+    end,
     priority = 1000,
   },
 }
+
+function setThemeOS()
+  local handle = io.popen 'defaults read -g AppleInterfaceStyle 2>/dev/null'
+  if not handle then
+    return
+  end
+  local result = handle:read '*a'
+  handle:close()
+
+  if result:match 'Dark' then
+    vim.o.background = 'dark'
+    vim.cmd 'colo github_dark_high_contrast'
+  else
+    vim.o.background = 'light'
+    vim.cmd 'colo github_light_high_contrast'
+  end
+end
 
 return config

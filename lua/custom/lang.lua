@@ -27,6 +27,7 @@ function modules.setup()
         'yaml',
         'prisma',
         'graphql',
+        'sql'
       },
 
       -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
