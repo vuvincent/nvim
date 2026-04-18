@@ -1,34 +1,43 @@
 local modules = {}
 
 function modules.setup()
+  local ensureInstalled = {
+    'c',
+    'cpp',
+    'go',
+    'lua',
+    'python',
+    'rust',
+    'tsx',
+    'javascript',
+    'vimdoc',
+    'vim',
+    'bash',
+    'svelte',
+    'css',
+    'vue',
+    'python',
+    'astro',
+    'yaml',
+    'prisma',
+    'graphql',
+  }
+
+  local alreadyInstalled = require('nvim-treesitter.config').get_installed()
+  local parsersToInstall = vim
+    .iter(ensureInstalled)
+    :filter(function(parser)
+      return not vim.tbl_contains(alreadyInstalled, parser)
+    end)
+    :totable()
+  require('nvim-treesitter').install(parsersToInstall)
+
   -- [[ Configure Treesitter ]]
   -- See `:help nvim-treesitter`
   -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
   vim.defer_fn(function()
-    require('nvim-treesitter.configs').setup {
+    require('nvim-treesitter').setup {
       -- Add languages to be installed here that you want installed for treesitter
-      ensure_installed = {
-        'c',
-        'cpp',
-        'go',
-        'lua',
-        'python',
-        'rust',
-        'tsx',
-        'javascript',
-        'vimdoc',
-        'vim',
-        'bash',
-        'svelte',
-        'css',
-        'vue',
-        'python',
-        'astro',
-        'yaml',
-        'prisma',
-        'graphql',
-        'sql'
-      },
 
       -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
       auto_install = false,
@@ -140,43 +149,6 @@ function modules.setup()
   mason_lspconfig.setup {
     ensure_installed = vim.tbl_keys(servers),
     automatic_installation = true,
-  }
-
-  mason_lspconfig.setup_handlers {
-    function(server_name)
-      if server_name == 'tsserver' then
-        require('lspconfig')[server_name].setup {
-          cmd = {
-            'node',
-            '--max-old-space-size=16384',
-            vim.fn.stdpath 'data' .. '/mason/packages/typescript-language-server/node_modules/.bin/typescript-language-server',
-            '--stdio',
-            '--tsserver-path',
-            'node_modules/typescript/lib/tsserverlibrary.js',
-          },
-        }
-      elseif server_name == 'biome' then
-        require('lspconfig')[server_name].setup {
-          on_new_config = function(new_config, root_dir)
-            local p = root_dir .. '/node_modules/@biomejs/biome/bin/biome'
-            if vim.loop.fs_stat(p) then
-              new_config.cmd = { 'node', p, 'lsp-proxy' }
-            else
-              new_config.cmd = {
-                vim.fn.stdpath 'data' .. '/mason/bin/biome',
-                'lsp-proxy',
-              }
-            end
-          end,
-        }
-      else
-        require('lspconfig')[server_name].setup {
-          capabilities = capabilities,
-          settings = servers[server_name],
-          filetypes = (servers[server_name] or {}).filetypes,
-        }
-      end
-    end,
   }
 
   -- hide lsp inline text

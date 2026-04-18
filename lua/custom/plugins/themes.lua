@@ -23,21 +23,6 @@ local config = {
       }
     end,
   },
-  {
-    'stevedylandev/darkmatter-nvim',
-    lazy = false,
-    priority = 1000,
-    config = function()
-      -- vim.cmd 'colorscheme darkmatter'
-    end,
-  },
-  {
-    'mcauley-penney/techbase.nvim',
-    config = function()
-      -- vim.cmd 'colorscheme techbase'
-    end,
-    priority = 1000,
-  },
 }
 
 function setThemeOS()
