@@ -81,7 +81,3 @@ vim.api.nvim_set_keymap('n', '<C-h>', ':wincmd h<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<C-j>', ':wincmd j<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<C-k>', ':wincmd k<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<C-l>', ':wincmd l<CR>', { silent = true })
-
--- Avanta (AI)
-vim.keymap.set('v', '<leader>aa', require('avante.api').ask, { desc = '[A]vante [A]sk' })
-vim.keymap.set('v', '<leader>ae', require('avante.api').edit, { desc = '[A]vante [e]dit' })
