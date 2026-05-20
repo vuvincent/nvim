@@ -123,6 +123,7 @@ function modules.setup()
     'prismals',
     'gopls',
     'rust_analyzer',
+    'clangd',
   }
 
   vim.diagnostic.config { virtual_text = false }

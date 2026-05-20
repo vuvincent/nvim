@@ -16,6 +16,8 @@ function M.setup()
       -- Formatter for rust
       rust = { 'rustfmt' },
       go = { 'goimports' },
+      c = { 'clang-format' },
+      cpp = { 'clang-format' },
     },
   }
 
