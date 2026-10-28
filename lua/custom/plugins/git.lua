@@ -91,5 +91,40 @@ return {
       date_format = "%m-%d-%Y %H:%M:%S", -- template for the date, check Date format section for more options
       virtual_text_column = 1, -- virtual text start column, check Start virtual text at column section for more options
     },
-  }
+  },
+  {
+    'emrearmagan/atlas.nvim',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+      'MeanderingProgrammer/render-markdown.nvim',
+    },
+    opts = {
+      keymaps = {
+        pulls = {
+          open_diff = { 'gd', '<CR>' },
+        },
+      },
+      pulls = {
+        providers = {
+          github = {
+            views = {
+              { name = 'My PRs', key = '1', search = 'author:@me sort:updated-desc' },
+              { name = 'Review requested', key = '2', search = 'is:open review-requested:@me -reviewed-by:@me draft:false sort:updated-desc' },
+            },
+          },
+        },
+      },
+      issues = {
+        providers = {
+          github = {
+            views = {
+              { name = 'Assigned', key = '1', search = 'assignee:@me is:open' },
+              { name = 'Created', key = '2', search = 'author:@me is:open' },
+              { name = 'Mentions', key = '3', search = 'mentions:@me is:open' },
+            },
+          },
+        },
+      },
+    },
+  },
 }

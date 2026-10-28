@@ -16,11 +16,12 @@ function modules.setup()
     'svelte',
     'css',
     'vue',
-    'python',
     'astro',
     'yaml',
     'prisma',
     'graphql',
+    'hcl',
+    'terraform',
   }
 
   local alreadyInstalled = require('nvim-treesitter.config').get_installed()
@@ -32,77 +33,16 @@ function modules.setup()
     :totable()
   require('nvim-treesitter').install(parsersToInstall)
 
-  vim.defer_fn(function()
-    require('nvim-treesitter').setup {
-      auto_install = false,
-      sync_install = false,
-      ignore_install = {},
-      modules = {},
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-        use_languagetree = false,
-        disable = function(_, bufnr)
-          local buf_name = vim.api.nvim_buf_get_name(bufnr)
-          local file_size = vim.api.nvim_call_function('getfsize', { buf_name })
-          return file_size > 256 * 1024
-        end,
-      },
-      indent = { enable = true },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = '<c-space>',
-          node_incremental = '<c-space>',
-          scope_incremental = '<c-s>',
-          node_decremental = '<M-space>',
-        },
-      },
-      textobjects = {
-        select = {
-          enable = true,
-          lookahead = true,
-          keymaps = {
-            ['aa'] = '@parameter.outer',
-            ['ia'] = '@parameter.inner',
-            ['af'] = '@function.outer',
-            ['if'] = '@function.inner',
-            ['ac'] = '@class.outer',
-            ['ic'] = '@class.inner',
-          },
-        },
-        move = {
-          enable = true,
-          set_jumps = true,
-          goto_next_start = {
-            [']m'] = '@function.outer',
-            [']]'] = '@class.outer',
-          },
-          goto_next_end = {
-            [']M'] = '@function.outer',
-            [']['] = '@class.outer',
-          },
-          goto_previous_start = {
-            ['[m'] = '@function.outer',
-            ['[['] = '@class.outer',
-          },
-          goto_previous_end = {
-            ['[M'] = '@function.outer',
-            ['[]'] = '@class.outer',
-          },
-        },
-        swap = {
-          enable = true,
-          swap_next = {
-            ['<leader>a'] = '@parameter.inner',
-          },
-          swap_previous = {
-            ['<leader>A'] = '@parameter.inner',
-          },
-        },
-      },
-    }
-  end, 0)
+  -- nvim-treesitter main branch dropped the old module API; enable highlighting via autocmd
+  vim.api.nvim_create_autocmd('FileType', {
+    callback = function(ev)
+      local buf_name = vim.api.nvim_buf_get_name(ev.buf)
+      local file_size = vim.api.nvim_call_function('getfsize', { buf_name })
+      if file_size <= 256 * 1024 then
+        pcall(vim.treesitter.start, ev.buf)
+      end
+    end,
+  })
 
   -- Native LSP setup (no mason, no lspconfig)
   vim.lsp.config('*', {
@@ -111,7 +51,9 @@ function modules.setup()
   })
 
   vim.lsp.enable {
-    'ts_ls',
+    -- 'ts_ls' cannot start where `typescript` is aliased to a build without
+    -- tsserver.js; 'tsgo' talks to TypeScript 7's native server instead.
+    'tsgo',
     'lua_ls',
     'pyright',
     'cssls',
@@ -124,6 +66,7 @@ function modules.setup()
     'gopls',
     'rust_analyzer',
     'clangd',
+    'terraformls',
   }
 
   vim.diagnostic.config { virtual_text = false }
